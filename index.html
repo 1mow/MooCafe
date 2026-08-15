@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; frame-src https://www.google.com; script-src 'self' 'unsafe-inline'; connect-src 'self'; base-uri 'self'; form-action 'self';">
+<meta name="referrer" content="no-referrer-when-downgrade">
+<meta name="theme-color" content="#2A1912">
+<meta name="description" content="MOOcafe Mokotów — kawiarnia i lodziarnia w Warszawie przy ul. Bukowińskiej 24d. Kawa specialty, matcha, lemoniady, koktajle i lody rzemieślnicze.">
+<title>MOOcafe Mokotów — kawa, matcha i lody w Warszawie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#FBF6EC;
+    --cream-2:#FFFDF8;
+    --espresso:#2A1912;
+    --ink:#211712;
+    --pink:#E63888;
+    --matcha:#6E8C3E;
+    --gold:#D9A441;
+    --coral:#F0654A;
+    --lav:#9B7FC7;
+    --line: rgba(42,25,18,0.12);
+    --shadow: 0 20px 45px -25px rgba(42,25,18,0.45);
+    --radius: 22px;
+    --wave-h: 64px;
+    --maxw: 1180px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important;}
+  }
+
+  /* ---------- Scroll-reveal (JS toggles .show via IntersectionObserver) ---------- */
+  .reveal{
+    opacity:0;
+    transform:translateY(22px);
+    transition:opacity .7s cubic-bezier(.16,.8,.24,1), transform .7s cubic-bezier(.16,.8,.24,1);
+    transition-delay:var(--d, 0s);
+  }
+  .reveal.show{opacity:1; transform:translateY(0);}
+
+  @keyframes floatBlob{
+    0%{transform:translate(0,0) rotate(0deg);}
+    50%{transform:translate(16px,-20px) rotate(8deg);}
+    100%{transform:translate(0,0) rotate(0deg);}
+  }
+  @keyframes starPop{
+    0%{transform:scale(0) rotate(-20deg); opacity:0;}
+    70%{transform:scale(1.25) rotate(4deg); opacity:1;}
+    100%{transform:scale(1) rotate(0deg); opacity:1;}
+  }
+  @keyframes panelIn{
+    from{opacity:0; transform:translateY(10px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+  @keyframes pinBob{
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-8px);}
+  }
+  @keyframes heroIn{
+    from{opacity:0; transform:translateY(18px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+
+  body{
+    margin:0;
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Manrope',sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  img{max-width:100%; display:block;}
+  a{color:inherit;}
+
+  h1,h2,h3{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    margin:0 0 0.4em 0;
+    letter-spacing:-0.01em;
+  }
+
+  .eyebrow{
+    font-family:'JetBrains Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    font-weight:700;
+    color:var(--pink);
+  }
+
+  .price{
+    font-family:'JetBrains Mono',monospace;
+    font-weight:700;
+  }
+
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px;}
+  section{position:relative;}
+
+  /* ---------- Focus visibility (accessibility / quality floor) ---------- */
+  a:focus-visible, button:focus-visible{
+    outline:3px solid var(--pink);
+    outline-offset:3px;
+    border-radius:6px;
+  }
+
+  /* ---------- Cow-spot decorative blobs ---------- */
+  .spot{
+    position:absolute;
+    background:var(--espresso);
+    opacity:0.06;
+    border-radius:38% 62% 55% 45% / 45% 40% 60% 55%;
+    pointer-events:none;
+    animation:floatBlob 16s ease-in-out infinite;
+  }
+
+  /* ---------- Nav ---------- */
+  header.site-nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(251,246,236,0.86);
+    backdrop-filter:blur(10px) saturate(1.2);
+    -webkit-backdrop-filter:blur(10px) saturate(1.2);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 24px;
+    max-width:var(--maxw); margin:0 auto;
+  }
+  .logo{
+    display:flex; align-items:center; gap:10px;
+    font-family:'Fraunces',serif; font-weight:700; font-size:1.32rem;
+    text-decoration:none; color:var(--espresso);
+  }
+  .logo .dot{
+    width:11px;height:11px;border-radius:50%;
+    background:var(--pink);
+    box-shadow:6px 2px 0 -1px var(--matcha), -6px -3px 0 -2px var(--gold);
+  }
+  nav.links{display:flex; gap:28px; align-items:center;}
+  nav.links a{
+    text-decoration:none; font-weight:600; font-size:0.94rem;
+    color:var(--espresso); opacity:0.78;
+    padding:6px 2px; border-bottom:2px solid transparent;
+    transition:opacity .2s ease, border-color .2s ease;
+  }
+  nav.links a:hover{opacity:1; border-color:var(--pink);}
+  .btn{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'Manrope',sans-serif; font-weight:700; font-size:0.92rem;
+    padding:11px 20px; border-radius:100px;
+    text-decoration:none; border:1.5px solid transparent;
+    cursor:pointer; white-space:nowrap;
+    transition:transform .15s ease, box-shadow .15s ease, background .15s ease;
+  }
+  .btn:active{transform:scale(0.97);}
+  .btn-primary{background:var(--espresso); color:var(--cream-2);}
+  .btn-primary:hover{box-shadow:var(--shadow); transform:translateY(-2px);}
+  .btn-ghost{border-color:var(--espresso); color:var(--espresso); background:transparent;}
+  .btn-ghost:hover{background:var(--espresso); color:var(--cream-2);}
+  .btn-pink{background:var(--pink); color:#fff;}
+  .btn-pink:hover{box-shadow:0 14px 30px -14px rgba(230,56,136,0.6); transform:translateY(-2px);}
+
+  .burger{
+    display:none; background:none; border:none; cursor:pointer;
+    width:44px; height:44px; align-items:center; justify-content:center;
+    border-radius:12px;
+  }
+  .burger span, .burger span::before, .burger span::after{
+    content:''; display:block; width:22px; height:2px; background:var(--espresso);
+    position:relative; transition:transform .2s ease, opacity .2s ease;
+  }
+  .burger span::before{position:absolute; top:-7px;}
+  .burger span::after{position:absolute; top:7px;}
+  body.nav-open .burger span{background:transparent;}
+  body.nav-open .burger span::before{transform:translateY(7px) rotate(45deg); background:var(--espresso);}
+  body.nav-open .burger span::after{transform:translateY(-7px) rotate(-45deg); background:var(--espresso);}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    padding:clamp(48px, 8vw, 96px) 0 calc(var(--wave-h) + 40px);
+    overflow:hidden;
+  }
+  .hero .wrap{position:relative; z-index:2;}
+
+  h1.hero-title{
+    font-size:clamp(2.6rem, 7vw, 5.2rem);
+    line-height:0.98;
+    max-width:14ch;
+  }
+  h1.hero-title em{
+    font-style:italic; color:var(--pink);
+    font-weight:500;
+  }
+  .hero-sub{
+    font-size:clamp(1rem, 2vw, 1.2rem);
+    max-width:46ch;
+    opacity:0.82;
+    margin:18px 0 30px 0;
+    line-height:1.6;
+  }
+  .hero-ctas{display:flex; flex-wrap:wrap; gap:14px; margin-bottom:6px;}
+
+  /* Single, tasteful rating mention — social proof right by the CTA */
+  .rating-badge{
+    display:inline-flex; align-items:center; gap:10px;
+    margin:22px 0 40px 0;
+    padding:9px 16px 9px 10px;
+    background:var(--cream-2);
+    border:1px solid var(--line);
+    border-radius:100px;
+    width:fit-content;
+  }
+  .rating-badge .stars{display:inline-flex; gap:1px;}
+  .rating-badge .star{
+    color:var(--gold); font-size:0.95rem; display:inline-block;
+    transform:scale(0); opacity:0;
+    animation:starPop .5s ease forwards;
+    animation-delay:calc(var(--i) * 0.09s + 0.5s);
+  }
+  .rating-badge .rating-text{font-size:0.86rem; font-weight:600;}
+  .rating-badge .rating-text .muted{font-weight:500; opacity:0.6;}
+
+  .hero-anim{
+    opacity:0;
+    animation:heroIn .8s cubic-bezier(.16,.8,.24,1) forwards;
+    animation-delay:var(--hd, 0s);
+  }
+
+  /* wave divider — signature element, echoes the venue's own menu-board wave graphics */
+  .wave{
+    position:relative;
+    height:var(--wave-h);
+    margin-top:-2px;
+  }
+  .wave svg{width:100%; height:100%; display:block;}
+
+  /* ---------- Section shell ---------- */
+  .section{padding:64px 0;}
+  .section-head{
+    display:flex; justify-content:space-between; align-items:flex-end;
+    flex-wrap:wrap; gap:16px; margin-bottom:34px;
+  }
+  .section-head h2{font-size:clamp(1.8rem,4vw,2.6rem);}
+  .section-note{max-width:38ch; font-size:0.92rem; opacity:0.7;}
+
+  /* ---------- About / info strip ---------- */
+  .about{background:var(--espresso); color:var(--cream-2);}
+  .about .eyebrow{color:var(--gold);}
+  .about-grid{
+    display:grid; grid-template-columns:1.1fr 0.9fr; gap:56px;
+    align-items:start;
+  }
+  .about p{line-height:1.75; font-size:1.02rem; color:rgba(255,253,248,0.86);}
+  .info-cards{display:grid; gap:14px;}
+  .info-card{
+    background:rgba(255,253,248,0.06);
+    border:1px solid rgba(255,253,248,0.14);
+    border-radius:16px; padding:16px 18px;
+    display:flex; gap:14px; align-items:flex-start;
+  }
+  .info-card .ic{
+    width:38px; height:38px; flex:none; border-radius:10px;
+    display:flex; align-items:center; justify-content:center;
+    background:rgba(255,253,248,0.1); font-size:1.1rem;
+  }
+  .info-card h3{font-family:'Manrope',sans-serif; font-weight:700; font-size:0.98rem; color:#fff; margin-bottom:3px;}
+  .info-card div.txt{font-size:0.88rem; color:rgba(255,253,248,0.72); line-height:1.5;}
+  .info-card a{text-decoration:underline; text-underline-offset:3px;}
+
+  /* ---------- Menu ---------- */
+  .menu{background:var(--cream);}
+  .tabs{
+    display:flex; gap:8px; overflow-x:auto;
+    padding-bottom:6px; margin-bottom:30px;
+    scrollbar-width:none;
+  }
+  .tabs::-webkit-scrollbar{display:none;}
+  .tab{
+    flex:none;
+    font-family:'Manrope',sans-serif; font-weight:700; font-size:0.88rem;
+    padding:11px 18px; border-radius:100px;
+    background:var(--cream-2); border:1.5px solid var(--line);
+    cursor:pointer; white-space:nowrap;
+    transition:background .18s ease, color .18s ease, border-color .18s ease;
+  }
+  .tab[aria-selected="true"]{
+    background:var(--espresso); color:var(--cream-2); border-color:var(--espresso);
+  }
+  .tab .sw{display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:8px; vertical-align:middle;}
+
+  .menu-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(240px,1fr));
+    gap:14px;
+  }
+  .menu-panel{display:none;}
+  .menu-panel.active{display:block; animation:panelIn .45s cubic-bezier(.16,.8,.24,1);}
+
+  .item{
+    background:var(--cream-2);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:16px 18px;
+    display:flex; justify-content:space-between; align-items:flex-start; gap:12px;
+    transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+  }
+  .item:hover{transform:translateY(-3px); box-shadow:var(--shadow); border-color:transparent;}
+  .item .name{font-weight:700; font-size:0.98rem; line-height:1.3;}
+  .item .note{font-size:0.8rem; opacity:0.6; margin-top:3px;}
+  .item .price{font-size:1rem; white-space:nowrap; flex:none;}
+
+  .cat-note{
+    font-size:0.82rem; opacity:0.65; margin-top:18px; font-style:italic;
+  }
+
+  /* ---------- Ice cream board ---------- */
+  .board-section{background:var(--gold); overflow:hidden;}
+  .board-grid{display:grid; grid-template-columns:1fr 1fr; gap:44px; align-items:center;}
+  .chalkboard{
+    background:var(--ink); color:var(--cream-2);
+    border-radius:20px; padding:34px 30px;
+    box-shadow:var(--shadow);
+    transform:rotate(-1.2deg);
+  }
+  .chalkboard h3{font-family:'Fraunces',serif; font-size:2rem; color:#fff; font-style:italic;}
+  .chalkboard ul{list-style:none; margin:16px 0 0 0; padding:0;}
+  .chalkboard li{
+    padding:9px 0; border-bottom:1px dashed rgba(255,253,248,0.18);
+    font-size:0.98rem; display:flex; align-items:center; gap:10px;
+    transition:transform .18s ease, color .18s ease;
+  }
+  .chalkboard li:hover{transform:translateX(6px); color:var(--gold);}
+  .chalkboard li::before{content:'🍦'; font-size:0.85rem;}
+  .board-copy .eyebrow{color:var(--espresso);}
+  .board-copy h2{color:var(--espresso);}
+  .board-copy p{color:rgba(42,25,18,0.82); line-height:1.7; max-width:44ch;}
+
+  /* ---------- Map / contact ---------- */
+  .contact{background:var(--cream);}
+  .contact-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:24px;
+    align-items:stretch;
+  }
+  .map-card{
+    position:relative;
+    border-radius:var(--radius); overflow:hidden; border:1px solid var(--line);
+    min-height:340px; box-shadow:var(--shadow);
+    background:
+      radial-gradient(circle at 22px 22px, rgba(42,25,18,0.09) 1.6px, transparent 1.6px),
+      linear-gradient(155deg, var(--gold) 0%, #E9C27B 55%, var(--cream-2) 100%);
+    background-size:24px 24px, 100% 100%;
+    display:flex; flex-direction:column; justify-content:space-between;
+    padding:26px;
+    transition:transform .25s ease, box-shadow .25s ease;
+  }
+  .map-card:hover{transform:translateY(-3px);}
+  .map-card::before{
+    content:'';
+    position:absolute; inset:0;
+    background:
+      repeating-linear-gradient(100deg, transparent 0 60px, rgba(42,25,18,0.08) 60px 62px),
+      repeating-linear-gradient(10deg, transparent 0 90px, rgba(42,25,18,0.06) 90px 92px);
+    pointer-events:none;
+  }
+  .map-pin{
+    position:relative; z-index:1;
+    width:56px; height:56px; border-radius:50% 50% 50% 4px;
+    background:var(--espresso);
+    display:flex; align-items:center; justify-content:center;
+    transform:rotate(-45deg);
+    box-shadow:var(--shadow);
+    margin:20px auto 0;
+    animation:pinBob 3s ease-in-out infinite;
+  }
+  .map-pin span{transform:rotate(45deg); font-size:1.3rem;}
+  .map-caption{
+    position:relative; z-index:1;
+    background:var(--cream-2);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:16px 18px;
+    display:flex; flex-direction:column; gap:2px;
+    max-width:280px;
+  }
+  .map-caption strong{font-family:'Fraunces',serif; font-size:1.15rem; font-weight:600;}
+  .map-caption span{font-size:0.86rem; opacity:0.68;}
+  .map-cta{align-self:flex-start; position:relative; z-index:1;}
+  .contact-card{
+    background:var(--cream-2); border:1px solid var(--line); border-radius:var(--radius);
+    padding:32px; display:flex; flex-direction:column; justify-content:space-between; gap:22px;
+  }
+  .contact-card h3{font-size:1.5rem;}
+  .contact-list{list-style:none; padding:0; margin:0; display:grid; gap:14px;}
+  .contact-list li{display:flex; gap:12px; align-items:flex-start; font-size:0.95rem;}
+  .contact-list .k{
+    font-family:'JetBrains Mono',monospace; font-size:0.72rem; text-transform:uppercase;
+    letter-spacing:0.08em; opacity:0.55; width:88px; flex:none; padding-top:2px;
+  }
+  .contact-list a{text-decoration:underline; text-underline-offset:3px; font-weight:600;}
+  .contact-ctas{display:flex; gap:12px; flex-wrap:wrap;}
+
+  .status-line{
+    display:flex; align-items:center; gap:8px; font-size:0.88rem; font-weight:700;
+  }
+  .status-dot{width:9px; height:9px; border-radius:50%; background:var(--matcha);}
+  .status-dot.closed{background:var(--coral);}
+
+  /* ---------- Footer ---------- */
+  footer{
+    background:var(--espresso); color:rgba(255,253,248,0.6);
+    padding:34px 0; font-size:0.84rem;
+  }
+  .foot-inner{display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px; align-items:center;}
+  footer a{text-decoration:underline; text-underline-offset:3px; color:rgba(255,253,248,0.85);}
+
+  /* ---------- Touch-device adaptations (set via JS) ---------- */
+  body.touch .btn{padding:14px 22px; font-size:1rem;}
+  body.touch .tab{padding:13px 20px;}
+  body.touch .item{padding:18px 20px;}
+  body.touch nav.links a{padding:10px 4px;}
+  body.touch .contact-list li{font-size:1rem;}
+
+  /* Desktop-only affordance: subtle hover isn't applied on touch */
+  body.touch .item:hover{transform:none; box-shadow:none; border-color:var(--line);}
+
+  /* Safe-area padding for notched phones */
+  body{
+    padding-left:env(safe-area-inset-left);
+    padding-right:env(safe-area-inset-right);
+  }
+  footer{padding-bottom:calc(34px + env(safe-area-inset-bottom));}
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:920px){
+    .about-grid, .board-grid, .contact-grid{grid-template-columns:1fr;}
+    .board-grid{gap:30px;}
+    .chalkboard{transform:none;}
+  }
+
+  @media (max-width:760px){
+    nav.links{
+      position:fixed; inset:64px 0 0 0; background:var(--cream);
+      flex-direction:column; align-items:flex-start; gap:0;
+      padding:12px 24px 24px;
+      transform:translateY(-8px); opacity:0; visibility:hidden;
+      transition:opacity .18s ease, transform .18s ease, visibility .18s;
+      border-bottom:1px solid var(--line);
+    }
+    body.nav-open nav.links{opacity:1; transform:translateY(0); visibility:visible;}
+    nav.links a{width:100%; padding:14px 0; border-bottom:1px solid var(--line);}
+    nav.links .btn{margin-top:10px; width:100%; justify-content:center;}
+    .burger{display:flex;}
+  }
+
+  @media (max-width:520px){
+    .wrap{padding:0 18px;}
+    :root{--wave-h:40px;}
+    .menu-grid{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="nav-inner">
+    <a href="#top" class="logo"><span class="dot" aria-hidden="true"></span>MOOcafe</a>
+    <nav class="links" id="navLinks">
+      <a href="#o-nas">O nas</a>
+      <a href="#menu">Menu</a>
+      <a href="#lody">Lody</a>
+      <a href="#kontakt">Kontakt i godziny</a>
+    </nav>
+    <button class="burger" id="burgerBtn" aria-label="Otwórz menu nawigacji" aria-expanded="false" aria-controls="navLinks">
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="spot" style="width:340px;height:340px; top:-60px; right:-90px;"></div>
+    <div class="spot" style="width:180px;height:180px; bottom:20px; left:-60px;"></div>
+    <div class="wrap">
+      <h1 class="hero-title hero-anim" style="--hd:.05s">Kawa, matcha i lody<br>z <em>Mokotowa</em>.</h1>
+      <p class="hero-sub hero-anim" style="--hd:.18s">MOOcafe to kawiarniano-lodziarniany kącik przy Bukowińskiej — specialty coffee, autorskie latte, matcha bar z owocami i rzemieślnicze lody kręcone na miejscu. Na miejscu, na wynos albo z dostawą.</p>
+      <div class="rating-badge hero-anim" style="--hd:.3s">
+        <span class="stars" aria-hidden="true">
+          <span class="star" style="--i:0">★</span><span class="star" style="--i:1">★</span><span class="star" style="--i:2">★</span><span class="star" style="--i:3">★</span><span class="star" style="--i:4">★</span>
+        </span>
+        <span class="rating-text"><b>4,8</b>/5 <span class="muted">· 1160 opinii w Google</span></span>
+      </div>
+      <div class="hero-ctas hero-anim" style="--hd:.42s">
+        <a href="#menu" class="btn btn-pink">Zobacz menu</a>
+        <a href="tel:+48572435875" class="btn btn-ghost" id="phoneCta">📞 572 435 875</a>
+      </div>
+    </div>
+    <div class="wave" aria-hidden="true">
+      <svg viewBox="0 0 1200 64" preserveAspectRatio="none">
+        <path d="M0,32 C150,64 300,0 450,32 C600,64 750,0 900,32 C1050,64 1150,16 1200,32 L1200,64 L0,64 Z" fill="#2A1912"></path>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ABOUT / INFO -->
+  <section class="about" id="o-nas">
+    <div class="wrap section">
+      <div class="about-grid">
+        <div class="reveal">
+          <div class="eyebrow">O miejscu</div>
+          <h2>Mały mleczny róg Mokotowa</h2>
+          <p>Nazwa zobowiązuje — MOOcafe stawia na mleczne latte w pastelowych barwach (lawendowe, różane, matcha), espresso na wiele sposobów oraz lody kręcone z naturalnych składników, 80&nbsp;g w gałce. Latem menu poszerza się o lemoniady, tonic-i oraz koktajle na bazie Aperola, Prosecco i Martini.</p>
+          <p style="margin-top:14px;">Miejsce działa jako punkt „eat in / take away / delivery" — można usiąść na miejscu, zabrać kawę w drogę albo zamówić z dostawą.</p>
+        </div>
+        <div class="info-cards">
+            </div>
+          </div>
+          <div class="info-card reveal" style="--d:.13s">
+            <div class="ic">🕗</div>
+            <div>
+              <h3>Godziny</h3>
+              <div class="txt">PN - NDZ: 10:00-21:00</div>
+            </div>
+          </div>
+          <div class="info-card reveal" style="--d:.21s">
+            <div class="ic">💳</div>
+            <div>
+              <h3>Widełki cenowe</h3>
+              <div class="txt">Ok. 20–40 zł na osobę</div>
+            </div>
+          </div>
+          <div class="info-card reveal" style="--d:.29s">
+            <div class="ic">🔗</div>
+            <div>
+              <h3>Media społecznościowe</h3>
+              <div class="txt"><a href="https://pl-pl.facebook.com/moocafe/" target="_blank" rel="noopener noreferrer">facebook.com/moocafe</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wave" aria-hidden="true" style="transform:rotate(180deg);">
+      <svg viewBox="0 0 1200 64" preserveAspectRatio="none">
+        <path d="M0,32 C150,64 300,0 450,32 C600,64 750,0 900,32 C1050,64 1150,16 1200,32 L1200,64 L0,64 Z" fill="#FBF6EC"></path>
+      </svg>
+    </div>
+  </section>
+
+  <!-- MENU -->
+  <section class="section menu" id="menu">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <div class="eyebrow">Menu</div>
+          <h2>Co zamówić</h2>
+        </div>
+        <p class="section-note">Ceny zgodne z aktualną kartą lokalu. Karta może się zmieniać — pytaj obsługę o dostępność sezonowych smaków.</p>
+      </div>
+
+      <div class="tabs" role="tablist" aria-label="Kategorie menu" id="tabs"></div>
+      <div id="panels"></div>
+      <p class="cat-note">🔞 Koktajle zawierają alkohol i serwowane są wyłącznie osobom pełnoletnim.</p>
+    </div>
+  </section>
+
+  <!-- ICE CREAM BOARD -->
+  <section class="board-section" id="lody">
+    <div class="wrap section">
+      <div class="board-grid">
+        <div class="board-copy reveal">
+          <div class="eyebrow">Prosto z tablicy</div>
+          <h2>Smaki lodów</h2>
+          <p>Lody kręcone codziennie na miejscu, 100% naturalne składniki, gałka 80&nbsp;g za 11 zł. Skład zmienia się wraz z sezonem — poniżej aktualna lista z kredowej tablicy przy ladzie.</p>
+        </div>
+        <div class="chalkboard reveal" style="--d:.15s">
+          <h3>Smaki lodów</h3>
+          <ul id="iceList"></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section contact" id="kontakt">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <div>
+          <div class="eyebrow">Odwiedź nas</div>
+          <h2>Kontakt i dojazd</h2>
+        </div>
+      </div>
+      <div class="contact-grid">
+        <div class="map-card reveal">
+          <div class="map-pin" aria-hidden="true"><span>🐮</span></div>
+          <div class="map-caption">
+            <strong>ul. Bukowińska 24d</strong>
+            <span>02-703 Warszawa, Mokotów</span>
+          </div>
+          <a href="https://www.google.com/maps/dir/?api=1&destination=Bukowi%C5%84ska%2024d%2C%2002-703%20Warszawa" target="_blank" rel="noopener noreferrer" class="btn btn-primary map-cta">Otwórz w Mapach Google</a>
+        </div>
+        <div class="contact-card reveal" style="--d:.12s">
+          <div>
+            <h3>MOOcafe — Mokotów</h3>
+            <div class="status-line" style="margin:10px 0 18px;">
+              <span class="status-dot" aria-hidden="true"></span>
+              <span>Otwarte teraz · zamknięcie o 21:00</span>
+            </div>
+            <ul class="contact-list">
+              <li><span class="k">Adres</span><span>ul. Bukowińska 24d, 02-703 Warszawa</span></li>
+              <li><span class="k">Telefon</span><a href="tel:+48572435875">572 435 875</a></li>
+              <li><span class="k">Facebook</span><a href="https://pl-pl.facebook.com/moocafe/" target="_blank" rel="noopener noreferrer">moocafe</a></li>
+              <li><span class="k">Na miejscu</span><span>Eat in · Take away · Dostawa</span></li>
+              <li><span class="k">Udogodnienia</span><span>Miejsce przyjazne LGBTQ+</span></li>
+            </ul>
+          </div>
+          <div class="contact-ctas">
+            <a href="https://www.google.com/maps/dir/?api=1&destination=Bukowi%C5%84ska%2024d%2C%2002-703%20Warszawa" target="_blank" rel="noopener noreferrer" class="btn btn-primary" id="directionsBtn">Wyznacz trasę</a>
+            <a href="tel:+48572435875" class="btn btn-ghost">Zadzwoń</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap foot-inner">
+    <span>© <span id="year"></span> MOOcafe Mokotów · ul. Bukowińska 24d, Warszawa</span>
+    <span>Godziny i ceny mogą ulec zmianie — aktualny status sprawdzisz w <a href="https://www.google.com/maps/dir/?api=1&destination=Bukowi%C5%84ska%2024d%2C%2002-703%20Warszawa" target="_blank" rel="noopener noreferrer">Mapach Google</a>.</span>
+  </div>
+</footer>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------------------------------------------------------
+     Device / capability detection — used to gently adapt
+     layout & tap targets rather than to gate any content.
+  --------------------------------------------------------- */
+  var ua = navigator.userAgent || "";
+  var isIOS = /iPhone|iPad|iPod/i.test(ua);
+  var isAndroid = /Android/i.test(ua);
+  var isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+  var coarsePointer = window.matchMedia && window.matchMedia('(pointer:coarse)').matches;
+
+  if (isTouch || coarsePointer) {
+    document.body.classList.add('touch');
+  }
+  if (isIOS) document.body.classList.add('ios');
+  if (isAndroid) document.body.classList.add('android');
+
+  // On small / narrow phones, shorten the primary phone CTA label so it never wraps.
+  function adaptPhoneLabel(){
+    var el = document.getElementById('phoneCta');
+    if(!el) return;
+    if (window.innerWidth < 380) {
+      el.textContent = '📞 Zadzwoń';
+    } else {
+      el.textContent = '📞 572 435 875';
+    }
+  }
+  adaptPhoneLabel();
+  window.addEventListener('resize', debounce(adaptPhoneLabel, 150));
+
+  function debounce(fn, wait){
+    var t;
+    return function(){
+      clearTimeout(t);
+      t = setTimeout(fn, wait);
+    };
+  }
+
+  /* ---------------------------------------------------------
+     Mobile nav toggle
+  --------------------------------------------------------- */
+  var burger = document.getElementById('burgerBtn');
+  var navLinks = document.getElementById('navLinks');
+  if (burger) {
+    burger.addEventListener('click', function(){
+      var open = document.body.classList.toggle('nav-open');
+      burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      burger.setAttribute('aria-label', open ? 'Zamknij menu nawigacji' : 'Otwórz menu nawigacji');
+    });
+    navLinks.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){
+        document.body.classList.remove('nav-open');
+        burger.setAttribute('aria-expanded','false');
+      });
+    });
+  }
+
+  /* ---------------------------------------------------------
+     Menu data (transcribed from current in-store menu boards)
+  --------------------------------------------------------- */
+  var CATEGORIES = [
+    { id:'kawy',    label:'Kawy klasyczne', color:'#D9A441' },
+    { id:'latte',   label:'Latte',          color:'#9B7FC7' },
+    { id:'matcha',  label:'Matcha bar',     color:'#6E8C3E' },
+    { id:'zimne',   label:'Kawa na zimno',  color:'#2A1912' },
+    { id:'lemoniady', label:'Lemoniady i tonic-i', color:'#E63888' },
+    { id:'koktajle', label:'Koktajle', color:'#F0654A' }
+  ];
+
+  var ITEMS = {
+    kawy: [
+      {n:'Espresso', p:'11 zł'},
+      {n:'Espresso Macchiato', p:'12 zł'},
+      {n:'Espresso Doppio', p:'13 zł'},
+      {n:'Americano', note:'małe / duże', p:'13 / 15 zł'},
+      {n:'Inkaccino', p:'15 zł'},
+      {n:'Cappuccino', note:'małe / duże', p:'14 / 16 zł'},
+      {n:'Flat White', note:'małe / duże', p:'18 / 20 zł'},
+      {n:'Latte', p:'17 zł'},
+      {n:'Herbata', p:'15 zł'},
+      {n:'Mleko bez laktozy', note:'dodatek', p:'2 zł'},
+      {n:'Mleko roślinne', note:'dodatek', p:'3 zł'},
+      {n:'Syrop do kawy', note:'dodatek', p:'4 zł'},
+      {n:'Bita śmietana', note:'dodatek', p:'3 zł'}
+    ],
+    latte: [
+      {n:'Latte Lawendowe', p:'23 zł'},
+      {n:'Latte Różane', p:'23 zł'},
+      {n:'Latte Matcha', p:'19 zł'},
+      {n:'Latte na zimno — Różana Chmurka', p:'24 zł'},
+      {n:'Latte na zimno — Lawendowa Chmurka', p:'24 zł'}
+    ],
+    matcha: [
+      {n:'Matcha Malina', p:'27 zł'},
+      {n:'Matcha Jagoda', p:'27 zł'},
+      {n:'Matcha Mango', p:'27 zł'},
+      {n:'Matcha Kokos', p:'27 zł'},
+      {n:'Matcha Truskawka', p:'27 zł'},
+      {n:'Matcha Tonic', p:'27 zł'}
+    ],
+    zimne: [
+      {n:'Espresso Tonic', note:'1 / 2 espresso', p:'19 / 21 zł'},
+      {n:'Kawa mrożona', note:'1 / 2 espresso', p:'18 / 20 zł'},
+      {n:'Espresso Milk Cola', note:'hit TikToka', p:'22 zł'},
+      {n:'Affogato', p:'19 zł'},
+      {n:'Lody rzemieślnicze', note:'80 g, gałka', p:'11 zł'}
+    ],
+    lemoniady: [
+      {n:'Lemoniada klasyczna', p:'17 zł'},
+      {n:'Tonik lawenda', p:'18 zł'},
+      {n:'Tonik róża', p:'18 zł'},
+      {n:'Tonik biały bez', p:'18 zł'},
+      {n:'Tonic', p:'18 zł'},
+      {n:'Prosecco', p:'18 zł'},
+      {n:'Prosecco z watą cukrową', p:'21 zł'},
+      {n:'Prosecco z lodami', p:'27 zł'}
+    ],
+    koktajle: [
+      {n:'Martini Fiero', note:'wybór klientów', p:'29 zł'},
+      {n:'Aperol Spritz', p:'31 zł'},
+      {n:'Hugo', p:'31 zł'}
+    ]
+  };
+
+  var ICE_FLAVOURS = [
+    'Śmietanka extra','Palone masło','Magiczne Oreo','Wanilia babuni',
+    'Milka','Kinder Bueno','Nutella Cookies','Słony karmel','Sorbet mango-banan'
+  ];
+
+  var tabsEl = document.getElementById('tabs');
+  var panelsEl = document.getElementById('panels');
+
+  CATEGORIES.forEach(function(cat, i){
+    var tab = document.createElement('button');
+    tab.className = 'tab';
+    tab.type = 'button';
+    tab.setAttribute('role','tab');
+    tab.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+    tab.setAttribute('data-cat', cat.id);
+    tab.innerHTML = '<span class="sw" style="background:' + cat.color + '"></span>' + cat.label;
+    tab.addEventListener('click', function(){ selectCat(cat.id); });
+    tabsEl.appendChild(tab);
+
+    var panel = document.createElement('div');
+    panel.className = 'menu-panel' + (i === 0 ? ' active' : '');
+    panel.id = 'panel-' + cat.id;
+    panel.setAttribute('role','tabpanel');
+
+    var grid = document.createElement('div');
+    grid.className = 'menu-grid';
+    (ITEMS[cat.id] || []).forEach(function(it, idx){
+      var card = document.createElement('div');
+      card.className = 'item reveal';
+      card.style.setProperty('--d', (Math.min(idx, 8) * 0.05) + 's');
+      card.innerHTML =
+        '<div><div class="name">' + it.n + '</div>' +
+        (it.note ? '<div class="note">' + it.note + '</div>' : '') +
+        '</div><div class="price">' + it.p + '</div>';
+      grid.appendChild(card);
+    });
+    panel.appendChild(grid);
+    panelsEl.appendChild(panel);
+  });
+
+  function selectCat(id){
+    tabsEl.querySelectorAll('.tab').forEach(function(t){
+      t.setAttribute('aria-selected', t.getAttribute('data-cat') === id ? 'true' : 'false');
+    });
+    panelsEl.querySelectorAll('.menu-panel').forEach(function(p){
+      var isActive = p.id === 'panel-' + id;
+      p.classList.toggle('active', isActive);
+      if (isActive) {
+        // Cards in a freshly-opened tab should just be there — the panel
+        // entrance animation already provides the motion.
+        p.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('show'); });
+      }
+    });
+  }
+
+  var iceListEl = document.getElementById('iceList');
+  ICE_FLAVOURS.forEach(function(f){
+    var li = document.createElement('li');
+    li.textContent = f;
+    iceListEl.appendChild(li);
+  });
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  /* ---------------------------------------------------------
+     Scroll-reveal animations. Falls back to instantly visible
+     if IntersectionObserver isn't supported.
+  --------------------------------------------------------- */
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+    function observeReveals(scope){
+      (scope || document).querySelectorAll('.reveal:not(.show)').forEach(function(el){
+        io.observe(el);
+      });
+    }
+    observeReveals();
+
+    // Menu items for the first (already-visible) tab are created after
+    // this script block starts running, so give them a tick then observe.
+    setTimeout(function(){ observeReveals(); }, 50);
+  } else {
+    document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('show'); });
+  }
+})();
+</script>
+
+</body>
+</html>
